@@ -57,10 +57,10 @@ jobs:
     - name: Añadir librerias y desplegar helm
       run: |
         helm repo add defectdojo 'https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts'
-        helm upgrade --install my-dojo defectdojo/defectdojo -f values-dojo.yml --set OpenShift.route.host="sonar-default.${{steps.domain-step.outputs.dominio}}" --namespace dojo
+        helm upgrade --install my-dojo defectdojo/defectdojo -f values.yml --set OpenShift.route.host="sonar-default.${{steps.domain-step.outputs.dominio}}" --namespace dojo
       working-directory: ./charts/dojo
 
     - name: Desplegar route
       run: |
-        kubectl apply -f route-dojo.yml -n dojo
+        kubectl apply -f route.yml -n dojo
       working-directory: ./charts/dojo
