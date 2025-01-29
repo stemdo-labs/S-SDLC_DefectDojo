@@ -1,0 +1,14 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: dojo
+spec:
+  host: dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud
+  to:
+    kind: Service
+    name: my-dojo-defectdojo-django
+  tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+  port:
+    targetPort: http

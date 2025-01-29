@@ -1,0 +1,35 @@
+## Esta parte solo debe tener el valor a true si es la primera vez que se despliega
+## si el chart desinstala y se vuelve a instalar sin haber borrado el namespace no funcionará
+createSecret: true
+createRedisSecret: true
+createPostgresqlSecret: true
+createPostgresqlHaSecret: true
+createPostgresqlHaPgpoolSecret: true
+
+## Si quieres configurar un route debes usar el mismo host, en este campo puedes añadir varios hosts
+## para los ALLOWED_HOSTS del pod de defectdojo-django
+alternativeHosts:
+  - dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud
+
+imagePullPolicy: IfNotPresent
+
+postgresql:
+  primary:
+    podSecurityContext:
+      enabled: false
+    containerSecurityContext:
+      enabled: false
+
+securityContext:
+  enabled: false
+
+django:
+  ingress:
+    enables: false
+  mediaPersistentVolume:
+    enabled: false
+
+postgresqlha:
+  postgresql:
+    securityContext:
+      enabled: false
