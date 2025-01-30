@@ -33,3 +33,7 @@ postgresqlha:
   postgresql:
     securityContext:
       enabled: false
+
+extraEnv:
+  - name: DD_SITE_URL
+    value: "https://dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud"
