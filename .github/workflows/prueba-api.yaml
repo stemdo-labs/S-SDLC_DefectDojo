@@ -2,7 +2,7 @@ name: PRUEBA API
 
 on: 
   workflow_dispatch:
-     inputs:
+    inputs:
       password:
         description: "Password"
         required: true
@@ -11,12 +11,15 @@ jobs:
   api-dojo:
     runs-on: ubuntu-latest
     steps:
-      - name: Pruba api dojo auth token
+      - name: Prueba API Dojo Auth Token
         run: |
-         curl -X 'POST' \  
+          # Definir la variable de la contraseña
+          GITHUB_INPUT_PASSWORD="${{ github.event.inputs.password }}"
+
+          # Ejecutar la petición curl
+          curl -X 'POST' \
             'https://dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud/api/v2/api-token-auth/' \
-            -H 'accept: application/json' \  
-            -H 'Content-Type: application/x-www-form-urlencoded' \ 
-            -H 'X-CSRFTOKEN: i8imCRG8rJsBDOhf56ArGAp7xYNkSyvyKdV4caW9MvBQs5qlFs6iolUhl1Xad1tP' \ 
-            -d 'username=admin&password=${{ github.event.inputs.password }}'
-      
+            -H 'accept: application/json' \
+            -H 'Content-Type: application/x-www-form-urlencoded' \
+            -H 'X-CSRFTOKEN: i8imCRG8rJsBDOhf56ArGAp7xYNkSyvyKdV4caW9MvBQs5qlFs6iolUhl1Xad1tP' \
+            -d "username=admin&password=${GITHUB_INPUT_PASSWORD}"
