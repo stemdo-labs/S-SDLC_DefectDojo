@@ -18,5 +18,5 @@ jobs:
             -H 'accept: application/json' \  
             -H 'Content-Type: application/x-www-form-urlencoded' \ 
             -H 'X-CSRFTOKEN: i8imCRG8rJsBDOhf56ArGAp7xYNkSyvyKdV4caW9MvBQs5qlFs6iolUhl1Xad1tP' \ 
-            -d 'username=admin&password= ${{ github.event.inputs.password }}'
+            -d 'username=admin&password=${{ github.event.inputs.password }}'
       
