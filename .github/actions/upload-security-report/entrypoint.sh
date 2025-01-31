@@ -14,30 +14,30 @@ echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN}"
 
 # Buscar engagement
 echo "Buscando engagement..."
-ENGAGEMENT_ID=$(curl -s "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" \
-    "${HEADERS[@]}" | jq -r '.results[0].id')
+ENGAGEMENT_RESPONSE=$(curl -s "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" "${HEADERS[@]}")
+ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | grep -o '"id":[0-9]*' | head -n 1 | sed 's/"id"://')
 
 # Si no existe, crear uno
-if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
+if [ -z "$ENGAGEMENT_ID" ]; then
     echo "Creando nuevo engagement..."
     
     ENGAGEMENT_RESPONSE=$(curl -s -X POST "${API_URL}/engagements/" \
         -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
         -H "accept: application/json" \
         -H "Content-Type: application/json" \
-        -d '{
-            "name": "Engagement de Prueba",
-            "product": 1,
-            "status": "In Progress",
-            "target_start": "2024-02-01",
-            "target_end": "2025-02-01"
-            }')
+        -d "{
+            \"name\": \"Engagement de Prueba\",
+            \"product\": 1,
+            \"status\": \"In Progress\",
+            \"target_start\": \"2024-02-01\",
+            \"target_end\": \"2025-02-01\"
+            }")
 
-    echo "respose:$ENGAGEMENT_RESPONSE"
-    ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
+    echo "response:$ENGAGEMENT_RESPONSE"
+    ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | grep -o '"id":[0-9]*' | head -n 1 | sed 's/"id"://')
     echo "id: $ENGAGEMENT_RESPONSE"
 
-    if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
+    if [ -z "$ENGAGEMENT_ID" ]; then
         echo "Error: No se pudo crear el engagement."
         exit 1
     fi

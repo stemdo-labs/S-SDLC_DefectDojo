@@ -31,12 +31,7 @@ runs:
       run: |
         DEFECTDOJO_URL=$(grep '^\s*host:' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | sed 's/.*host: //g' | tr -d '[:space:]')
         echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}"  >> $GITHUB_ENV
-
-    - name: Instalar jq
-      shell: bash
-      run: |
-        sudo apt-get update && sudo apt-get install -y jq
-        echo jq --version
+    
 
     - name: Obtener Token de DefectDojo
       shell: bash
