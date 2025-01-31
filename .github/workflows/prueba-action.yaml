@@ -1,0 +1,30 @@
+name: Test Upload Security Report to DefectDojo
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload_report:
+    name: Upload Report to DefectDojo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Simular Artifact 
+        run: |
+          if [ ! -f report_xml.xml ]; then
+            echo " Error: No encuentra el archivo"
+            exit 1
+          fi
+
+      - name: Subir reporte a DefectDojo
+        uses: ./github/actions/upload-security-report
+        with:
+          defectdojo_user: "admin"
+          defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
+          product_id: "1"
+          release_name: "Prueba Dojo"
+          scan_type: "ZAP Scan"
+          enviroment: "Development"
+          report: "./report_xml.xml"
