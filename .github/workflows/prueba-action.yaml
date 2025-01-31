@@ -19,7 +19,7 @@ jobs:
           fi
 
       - name: Subir reporte a DefectDojo
-        uses: ./github/actions/upload-security-report
+        uses: ./.github/actions/upload-security-report
         with:
           defectdojo_user: "admin"
           defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
