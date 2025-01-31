@@ -49,7 +49,7 @@ UPLOAD_RESPONSE=$(curl -s -X POST $HEADERS \
     -F "scan_type=${SCAN_TYPE}" \
     -F "test_type=${SCAN_TYPE}" \
     -F "environment=${ENVIRONMENT}" \
-    -F "file=@${REPORT_PATH}" \
+    -F "file=@${REPORT}" \
     "${API_URL}/import-scan/")
 
 if echo "$UPLOAD_RESPONSE" | grep -q '"id":'; then

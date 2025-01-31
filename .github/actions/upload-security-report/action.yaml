@@ -45,4 +45,4 @@ runs:
         PRODUCT_ID: ${{ inputs.product_id }}
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         SCAN_TYPE: ${{ inputs.scan_type }}
-        REPORT_PATH: ${{ inputs.report_path }}
+        REPORT: ${{ inputs.report }}
