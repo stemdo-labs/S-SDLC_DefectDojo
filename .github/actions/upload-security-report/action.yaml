@@ -30,18 +30,16 @@ runs:
       shell: bash
       run: |
         DEFECTDOJO_URL=$(grep '^\s*host:' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | sed 's/.*host: //g' | tr -d '[:space:]')
-        echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}"
+        echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}"  >> $GITHUB_ENV
 
-    #     DEFECTDOJO_URL=$(yq e '.spec.host' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | tr -d '[:space:]')
-    #     echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}" >> $GITHUB_ENV
-    # - name: Ejecutar script de subida a DefectDojo
-    #   shell: bash
-    #   run: ${{ github.action_path }}/entrypoint.sh
-    #   env:
-    #     DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
-    #     DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
-    #     DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
-    #     PRODUCT_ID: ${{ inputs.product_id }}
-    #     ENGAGEMENT_NAME: ${{ inputs.release_name }}
-    #     SCAN_TYPE: ${{ inputs.scan_type }}
-    #     REPORT: ${{ inputs.report }}
+    - name: Ejecutar script de subida a DefectDojo
+      shell: bash
+      run: ${{ github.action_path }}/entrypoint.sh
+      env:
+        DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
+        DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
+        DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
+        PRODUCT_ID: ${{ inputs.product_id }}
+        ENGAGEMENT_NAME: ${{ inputs.release_name }}
+        SCAN_TYPE: ${{ inputs.scan_type }}
+        REPORT: ${{ inputs.report }}
