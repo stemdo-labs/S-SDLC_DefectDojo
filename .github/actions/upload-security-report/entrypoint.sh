@@ -20,18 +20,20 @@ ENGAGEMENT_ID=$(curl -s "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${EN
 # Si no existe, crear uno
 if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
     echo "Creando nuevo engagement..."
-       ENGAGEMENT_RESPONSE=$(curl -s -X POST "${API_URL}/engagements/" \
+    
+    ENGAGEMENT_RESPONSE=$(curl -s -X POST "${API_URL}/engagements/" \
         -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
         -H "accept: application/json" \
         -H "Content-Type: application/json" \
         -d "{
-              \"name\": \"${ENGAGEMENT_NAME}\",
-              \"product\": \"${PRODUCT_ID}\",
-              \"status\": \"Not Started\",
-              \"target_start\": \"$(date +%Y-%m-%d)\",
-              \"target_end\": \"$(date -d '+1 year' +%Y-%m-%d)\"
+            "name": "Engagement de Prueba",
+            "product": 1,
+            "status": "In Progress",
+            "target_start": "2024-02-01",
+            "target_end": "2025-02-01"
             }")
 
+    echo "respose:$ENGAGEMENT_RESPONSE"
     ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
     echo "id: $ENGAGEMENT_RESPONSE"
 
