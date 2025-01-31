@@ -1,4 +1,4 @@
-name: Despliegue DEFECTDOJO en Openshift
+name: Despliegue DefecctDojo en Openshift
 
 on:
   workflow_dispatch:
@@ -46,18 +46,13 @@ jobs:
           kubectl create ns dojo
         fi
     
-    - name: Sacar Dominio para posterior introducion en values del chart
-      id: domain-step
-      run: |
-        echo "dominio=$(ibmcloud oc cluster get --cluster ez-ibm-openshift-vpc | grep "Ingress Subdomain:" | sed 's/.*Ingress Subdomain:[[:space:]]*//')" >> $GITHUB_OUTPUT
-    
     - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Añadir librerias y desplegar helm
       run: |
         helm repo add defectdojo 'https://raw.githubusercontent.com/DefectDojo/django-DefectDojo/helm-charts'
-        helm upgrade --install my-dojo defectdojo/defectdojo -f values.yml --set OpenShift.route.host="sonar-default.${{steps.domain-step.outputs.dominio}}" --namespace dojo
+        helm upgrade --install my-dojo defectdojo/defectdojo -f values.yml --namespace dojo
       working-directory: ./charts/dojo
 
     - name: Desplegar route
