@@ -5,6 +5,9 @@ set -e
 API_URL="${DEFECTDOJO_URL}/api/v2"
 HEADERS="-H 'accept: application/json' -H 'Content-Type: application/json'"
 
+echo "username=${DEFECTDOJO_USER}&password=${DEFECTDOJO_PASSWORD}"
+
+
 # Obtener token de auth
 echo "Obteniendo token de DefectDojo..."
 TOKEN_RESPONSE=$(curl -s -X POST "${API_URL}/api-token-auth/" \
