@@ -1,0 +1,48 @@
+name: 'Upload Security Report to DefectDojo'
+description: 'Sube reporte de seguridad a DefectDojo y lo asocia a un engagement.'
+inputs:
+  defectdojo_user:
+    description: 'Usuario de DefectDojo'
+    required: true
+  defectdojo_password:
+    description: 'Contraseña de DefectDojo'
+    required: true
+  product_id:
+    description: 'ID del producto en DefectDojo'
+    required: true
+  release_name:
+    description: 'Nombre del engagement'
+    required: true
+  scan_type:
+    description: 'Tipo de escaneo'
+    required: true
+  enviroment:
+    description: 'Entorno'
+    required: true
+  report:
+    description: 'Reporte a escanear'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Instalar yq para leer YAML
+      shell: bash
+      run: sudo apt-get install -y yq
+
+    - name: Extraer URL de DefectDojo desde Route.yaml
+      shell: bash
+      run: |
+        DEFECTDOJO_URL=$(yq e '.spec.host' "${{ inputs.defectdojo_route_file }}" | tr -d '[:space:]')
+        echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}" >> $GITHUB_ENV
+    - name: Ejecutar script de subida a DefectDojo
+      shell: bash
+      run: ${{ github.action_path }}/entrypoint.sh
+      env:
+        DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
+        DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
+        DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
+        PRODUCT_ID: ${{ inputs.product_id }}
+        ENGAGEMENT_NAME: ${{ inputs.release_name }}
+        SCAN_TYPE: ${{ inputs.scan_type }}
+        REPORT_PATH: ${{ inputs.report_path }}
