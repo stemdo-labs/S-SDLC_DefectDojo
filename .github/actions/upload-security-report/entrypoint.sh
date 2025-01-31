@@ -16,7 +16,7 @@ echo "curl -s -X POST \"https://${DEFECTDOJO_URL}/api/v2/api-token-auth/\" \\"
 echo "    -H \"accept: application/json\" \\"
 echo "    -H \"Content-Type: application/x-www-form-urlencoded\" \\"
 echo "    --data-urlencode \"username=${DEFECTDOJO_USER}\" \\"
-echo "    --data-urlencode \"password=${#DEFECTDOJO_PASSWORD}\"  
+echo "    --data-urlencode \"password=${DEFECTDOJO_PASSWORD}\"  
 
 TOKEN_RESPONSE=$(curl -s -X POST "${API_URL}/api-token-auth/" \
     -H "accept: application/json" \
