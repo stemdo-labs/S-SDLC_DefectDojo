@@ -35,15 +35,13 @@ runs:
     - name: Obtener Token de DefectDojo
       shell: bash
       run: |
-        echo "🔑 Obteniendo token de DefectDojo..."
+        echo "" Obteniendo token de DefectDojo..."
         TOKEN_RESPONSE=$(curl -s -X POST "https://${DEFECTDOJO_URL}/api/v2/api-token-auth/" \
           -H "accept: application/json" \
           -H "Content-Type: application/x-www-form-urlencoded" \
           --data-urlencode "username=${{ inputs.defectdojo_user }}" \
           --data-urlencode "password=${{ inputs.defectdojo_password }}")
-          
-        echo "Respuesta de la API de DefectDojo: $TOKEN_RESPONSE"
-        
+               
         # Extraer el token de la respuesta JSON
         TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
         
