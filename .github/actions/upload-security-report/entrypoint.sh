@@ -15,7 +15,12 @@ echo "Obteniendo token de DefectDojo..."
 TOKEN_RESPONSE=$(curl -s -X POST "${API_URL}/api-token-auth/" \
     -H "accept: application/json" \
     -H "Content-Type: application/x-www-form-urlencoded" \
-    -d "username=${DEFECTDOJO_USER}&password=${DEFECTDOJO_PASSWORD}")
+        --data-urlencode "username=${DEFECTDOJO_USER}" \
+    --data-urlencode "password=${DEFECTDOJO_PASSWORD}")
+
+
+echo " Respuesta de la API de DefectDojo:"
+echo "$TOKEN_RESPONSE"
 
 TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
 
