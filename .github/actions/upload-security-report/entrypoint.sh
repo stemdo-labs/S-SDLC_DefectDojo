@@ -27,12 +27,13 @@ if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
         -d "{
               \"name\": \"${ENGAGEMENT_NAME}\",
               \"product\": \"${PRODUCT_ID}\",
-              \"status\": \"In Progress\",
+              \"status\": \"Not Started\",
               \"target_start\": \"$(date +%Y-%m-%d)\",
               \"target_end\": \"$(date -d '+1 year' +%Y-%m-%d)\"
             }")
 
-        echo "$ENGAGEMENT_RESPONSE"
+    ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
+    echo "id: $ENGAGEMENT_RESPONSE"
 
     if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
         echo "Error: No se pudo crear el engagement."
