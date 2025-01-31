@@ -32,6 +32,8 @@ if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
               \"target_end\": \"$(date -d '+1 year' +%Y-%m-%d)\"
             }")
 
+        echo "$ENGAGEMENT_RESPONSE"
+
     if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
         echo "Error: No se pudo crear el engagement."
         exit 1
