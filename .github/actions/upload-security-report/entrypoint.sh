@@ -5,6 +5,7 @@ set -e
 API_URL="${DEFECTDOJO_URL}/api/v2"
 HEADERS="-H 'accept: application/json' -H 'Content-Type: application/json'"
 
+echo "API_URL=${API_URL}"
 echo "username=${DEFECTDOJO_USER}&password=${DEFECTDOJO_PASSWORD}"
 
 
