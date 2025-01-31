@@ -33,6 +33,7 @@ runs:
     - name: Extraer URL de DefectDojo desde Route.yaml
       shell: bash
       run: |
+        yq --version
         ls -la "${GITHUB_WORKSPACE}/charts/dojo/"
 
     #     DEFECTDOJO_URL=$(yq e '.spec.host' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | tr -d '[:space:]')
