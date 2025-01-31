@@ -25,13 +25,13 @@ if [ -z "$ENGAGEMENT_ID" ]; then
         -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
         -H "accept: application/json" \
         -H "Content-Type: application/json" \
-        -d "{
+        -d '{
             \"name\": \"Engagement de Prueba\",
             \"product\": 1,
             \"status\": \"In Progress\",
             \"target_start\": \"2024-02-01\",
             \"target_end\": \"2025-02-01\"
-            }")
+            }')
 
     echo "response:$ENGAGEMENT_RESPONSE"
     ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | grep -o '"id":[0-9]*' | head -n 1 | sed 's/"id"://')
