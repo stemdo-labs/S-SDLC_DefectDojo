@@ -25,13 +25,13 @@ if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
         -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
         -H "accept: application/json" \
         -H "Content-Type: application/json" \
-        -d "{
+        -d '{
             "name": "Engagement de Prueba",
             "product": 1,
             "status": "In Progress",
             "target_start": "2024-02-01",
             "target_end": "2025-02-01"
-            }")
+            }')
 
     echo "respose:$ENGAGEMENT_RESPONSE"
     ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
