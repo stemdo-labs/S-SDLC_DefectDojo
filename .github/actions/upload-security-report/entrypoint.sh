@@ -5,37 +5,8 @@ set -e
 API_URL="${DEFECTDOJO_URL}/api/v2"
 HEADERS="-H 'accept: application/json' -H 'Content-Type: application/json'"
 
-echo "API_URL=${API_URL}"
-echo "username=${DEFECTDOJO_USER}&password=${DEFECTDOJO_PASSWORD}"
-echo "Longitud de la contraseña: ${#DEFECTDOJO_PASSWORD} caracteres"
-
-
-# Obtener token de auth
-echo "Obteniendo token de DefectDojo..."
-echo "curl -s -X POST \"https://${DEFECTDOJO_URL}/api/v2/api-token-auth/\" \\"
-echo "    -H \"accept: application/json\" \\"
-echo "    -H \"Content-Type: application/x-www-form-urlencoded\" \\"
-echo "    --data-urlencode \"username=${DEFECTDOJO_USER}\" \\"
-echo "    --data-urlencode \"password=${#DEFECTDOJO_PASSWORD}\"  "
-
-TOKEN_RESPONSE=$(curl -s -X POST "${API_URL}/api-token-auth/" \
-    -H "accept: application/json" \
-    -H "Content-Type: application/x-www-form-urlencoded" \
-        --data-urlencode "username=${DEFECTDOJO_USER}" \
-    --data-urlencode "password=${DEFECTDOJO_PASSWORD}")
-
-
-echo " Respuesta de la API de DefectDojo:"
-echo "$TOKEN_RESPONSE"
-
-TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
-
-if [ "$TOKEN" == "null" ] || [ -z "$TOKEN" ]; then
-    echo "Error: No se pudo obtener el token de DefectDojo."
-    exit 1
-fi
-
-HEADERS="-H 'Authorization: Token $TOKEN' -H 'Content-Type: application/json'"
+echo "API_URL=${DEFECTDOJO_USER}"
+echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN:0:5}*****"
 
 # Buscar engagement
 echo "Buscando engagement..."

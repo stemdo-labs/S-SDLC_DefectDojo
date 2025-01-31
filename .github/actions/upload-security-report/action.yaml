@@ -32,7 +32,28 @@ runs:
         DEFECTDOJO_URL=$(grep '^\s*host:' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | sed 's/.*host: //g' | tr -d '[:space:]')
         echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}"  >> $GITHUB_ENV
 
-    
+    - name: Obtener Token de DefectDojo
+      shell: bash
+      run: |
+        echo "🔑 Obteniendo token de DefectDojo..."
+        TOKEN_RESPONSE=$(curl -s -X POST "https://${DEFECTDOJO_URL}/api/v2/api-token-auth/" \
+          -H "accept: application/json" \
+          -H "Content-Type: application/x-www-form-urlencoded" \
+          --data-urlencode "username=${{ inputs.defectdojo_user }}" \
+          --data-urlencode "password=${{ inputs.defectdojo_password }}")
+          
+        echo "Respuesta de la API de DefectDojo: $TOKEN_RESPONSE"
+        
+        # Extraer el token de la respuesta JSON
+        TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
+        
+        # Validar si el token se obtuvo correctamente
+        if [ -z "$TOKEN" ] || [ "$TOKEN" == "null" ]; then
+          echo "Error: No se pudo obtener el token de DefectDojo."
+          exit 1
+        fi
+        
+        echo "DEFECTDOJO_TOKEN=${TOKEN}" >> $GITHUB_ENV
         
     - name: Dar permisos de ejecución a entrypoint.sh
       shell: bash
@@ -43,8 +64,7 @@ runs:
       run: ${{ github.action_path }}/entrypoint.sh
       env:
         DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
-        DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
-        DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
+        DEFECTDOJO_TOKEN: ${{ env.DEFECTDOJO_TOKEN }}
         PRODUCT_ID: ${{ inputs.product_id }}
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         SCAN_TYPE: ${{ inputs.scan_type }}
