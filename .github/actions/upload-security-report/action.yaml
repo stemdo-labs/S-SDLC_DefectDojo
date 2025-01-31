@@ -26,15 +26,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Instalar yq para leer YAML
-      shell: bash
-      run: sudo apt-get install -y yq
-
     - name: Extraer URL de DefectDojo desde Route.yaml
       shell: bash
       run: |
-        yq --version
-        ls -la "${GITHUB_WORKSPACE}/charts/dojo/"
+        DEFECTDOJO_URL=$(grep '^\s*host:' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | sed 's/.*host: //g' | tr -d '[:space:]')
+        echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}"
 
     #     DEFECTDOJO_URL=$(yq e '.spec.host' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | tr -d '[:space:]')
     #     echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}" >> $GITHUB_ENV
