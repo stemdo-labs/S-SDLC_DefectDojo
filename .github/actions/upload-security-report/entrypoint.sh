@@ -3,9 +3,9 @@
 set -e
 
 API_URL="${DEFECTDOJO_URL}/api/v2"
-HEADERS="-H 'accept: application/json' -H 'Content-Type: application/json'"
+HEADERS="-H 'Authorization: Token ${DEFECTDOJO_TOKEN}' -H 'accept: application/json' -H 'Content-Type: application/json'"
 
-echo "API_URL=${DEFECTDOJO_USER}"
+echo "API_URL=${DEFECTDOJO_URL}"
 echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN:0:5}*****"
 
 # Buscar engagement
