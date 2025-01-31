@@ -22,9 +22,10 @@ jobs:
         uses: ./.github/actions/upload-security-report
         with:
           defectdojo_user: "admin"
-          defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
           product_id: "1"
           release_name: "Prueba Dojo"
           scan_type: "ZAP Scan"
           enviroment: "Development"
           report: "./report_xml.xml"
+        env:
+          DEFECTDOJO_PASSWORD: ${{ secrets.DEFECTDOJO_PASSWORD }}

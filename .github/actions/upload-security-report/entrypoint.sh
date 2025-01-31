@@ -7,6 +7,7 @@ HEADERS="-H 'accept: application/json' -H 'Content-Type: application/json'"
 
 echo "API_URL=${API_URL}"
 echo "username=${DEFECTDOJO_USER}&password=${DEFECTDOJO_PASSWORD}"
+echo "Longitud de la contraseña: ${#DEFECTDOJO_PASSWORD} caracteres"
 
 
 # Obtener token de auth
