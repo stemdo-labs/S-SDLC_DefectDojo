@@ -27,7 +27,7 @@ jobs:
           release_name: "Release 1.0"
           scan_type: "ZAP Scan"
           enviroment: "Production"
-          report: "./path/to/security_report.json"
+          report: "./path/to/security_report.xml"
 ```
 
 ## Entradas (*Inputs*)
