@@ -54,62 +54,18 @@ runs:
         
         echo "DEFECTDOJO_TOKEN=${TOKEN}" >> $GITHUB_ENV
 
-    - name: Buscar o crear engagement en DefectDojo
-      shell: bash
-      run: |
-        API_URL="${DEFECTDOJO_URL}/api/v2"
-        HEADERS=(
-          -H "Authorization: Token ${DEFECTDOJO_TOKEN}"
-          -H "accept: application/json"
-          -H "Content-Type: application/json"
-        )
-        
-        echo "Buscando engagement..."
-        ENGAGEMENT_ID=$(curl -v -X GET "${API_URL}/engagements/" \
-             -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
-             -H "accept: application/json" \
-             -H "Content-Type: application/json" \
-             "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" | jq -r '.results[0].id')
-
-        if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
-            echo "Creando nuevo engagement..."
-            ENGAGEMENT_RESPONSE=$(curl -v -X POST "${API_URL}/engagements/" \
-                -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
-                -H "accept: application/json" \
-                -H "Content-Type: application/json" \
-                -d "{
-                    \"name\": \"${ENGAGEMENT_NAME}\",
-                    \"product\": \"${PRODUCT_ID}\",
-                    \"status\": \"In Progress\",
-                    \"target_start\": \"$(date +%Y-%m-%d)\",
-                    \"target_end\": \"$(date -d '+1 year' +%Y-%m-%d)\"
-                }")
-            
-            echo "Respuesta de DefectDojo: $ENGAGEMENT_RESPONSE"
-
-            ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
-            
-            if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
-                echo "Error: No se pudo crear el engagement."
-                exit 1
-            fi
-            echo "Nuevo engagement creado con ID: $ENGAGEMENT_ID"
-        else
-            echo "Engagement existente encontrado con ID: $ENGAGEMENT_ID"
-        fi
-        echo "ENGAGEMENT_ID=${ENGAGEMENT_ID}" >> $GITHUB_ENV
         
     - name: Dar permisos de ejecución a entrypoint.sh
       shell: bash
       run: chmod +x ${{ github.action_path }}/entrypoint.sh
       
-  #   - name: Ejecutar script de subida a DefectDojo
-  #    shell: bash
-  #    run: ${{ github.action_path }}/entrypoint.sh
-  #    env:
-  #      DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
-  #      DEFECTDOJO_TOKEN: ${{ env.DEFECTDOJO_TOKEN }}
-  #      PRODUCT_ID: ${{ inputs.product_id }}
-  #      ENGAGEMENT_NAME: ${{ inputs.release_name }}
-  #      SCAN_TYPE: ${{ inputs.scan_type }}
-  #      REPORT: ${{ inputs.report }}
+    - name: Ejecutar script de subida a DefectDojo
+      shell: bash
+      run: ${{ github.action_path }}/entrypoint.sh
+      env:
+        DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
+        DEFECTDOJO_TOKEN: ${{ env.DEFECTDOJO_TOKEN }}
+        PRODUCT_ID: ${{ inputs.product_id }}
+        ENGAGEMENT_NAME: ${{ inputs.release_name }}
+        SCAN_TYPE: ${{ inputs.scan_type }}
+        REPORT: ${{ inputs.report }}
