@@ -45,6 +45,7 @@ runs:
         DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
         PRODUCT_TYPE_NAME: ${{ inputs.product_type_name }}
         PRODUCT_NAME: ${{ inputs.product_name }}
+        ENVIRONMENT: ${{ inputs.enviroment }}    
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         SCAN_TYPE: ${{ inputs.scan_type }}
         REPORT: ${{ inputs.report }}
