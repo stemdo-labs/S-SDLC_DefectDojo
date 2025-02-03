@@ -41,7 +41,7 @@ runs:
         DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
         DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
         PRODUCT_ID: ${{ inputs.product_id }}
-        ENVIROMENT: ${{ inputs.enviroment }}    
+        ENVIRONMENT: ${{ inputs.enviroment }}    
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         SCAN_TYPE: ${{ inputs.scan_type }}
         REPORT: ${{ inputs.report }}
