@@ -77,6 +77,13 @@ fi
 
 # Subir reporte
 echo "Subiendo reporte de seguridad a DefectDojo..."
+echo "-H "Content-Type: multipart/form-data" \
+    -F "engagement=${ENGAGEMENT_ID}" \
+    -F "scan_type=${SCAN_TYPE}" \
+    -F "test_type=${SCAN_TYPE}" \
+    -F "environment=${ENVIRONMENT}" \
+    -F "file=@${REPORT}")"
+    
 UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
     -H "accept: application/json" \
@@ -86,6 +93,7 @@ UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -F "test_type=${SCAN_TYPE}" \
     -F "environment=${ENVIRONMENT}" \
     -F "file=@${REPORT}")
+
 
 if echo "$UPLOAD_RESPONSE" | jq -e '.test_id' > /dev/null; then
     echo "Reporte subido correctamente."
