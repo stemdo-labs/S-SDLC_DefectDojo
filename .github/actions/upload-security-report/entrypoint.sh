@@ -14,14 +14,19 @@ echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN:0:5}*****"
 
 # Buscar engagement
 echo "Buscando engagement..."
-RESPONSE=$(curl -s -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" \
+RESPONSE=$(curl -v -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
     -H "accept: application/json" \
     -H "Content-Type: application/json")
 
-echo "Respuesta completa de DefectDojo: $RESPONSE"
+ENGAGEMENT_ID=$(echo "$RESPONSE" | jq -r '.results[0].id' 2>/dev/null || echo "null")
 
-ENGAGEMENT_ID=$(echo "$RESPONSE" | jq -r '.results[0].id')
+if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
+    echo "No se encontró engagement con el nombre: ${ENGAGEMENT_NAME}. Creando nuevo engagement..."
+else
+    echo "Engagement existente encontrado con ID: $ENGAGEMENT_ID"
+fi
+
 
 # Si no existe, crear uno
         if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
