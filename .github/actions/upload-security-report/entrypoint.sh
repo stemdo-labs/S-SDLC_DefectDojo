@@ -83,7 +83,7 @@ if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
         -d "{
             \"name\": \"${PRODUCT_NAME}\",
             \"description\": \"${PRODUCT_NAME}\",
-            \"product_type\": \"${PRODUCT_TYPE_ID}\"
+            \"prod_type\": \"${PRODUCT_TYPE_ID}\"
         }")
             
     echo "Respuesta de DefectDojo: $PRODUCT_RESPONSE"
