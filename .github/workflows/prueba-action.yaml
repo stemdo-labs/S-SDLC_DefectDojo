@@ -24,7 +24,7 @@ jobs:
           defectdojo_user: "admin"
           defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
           product_id: "1"
-          release_name: "Prueba Dojo"
+          release_name: "Prueba Dojo 2"
           scan_type: "ZAP Scan"
           enviroment: "Development"
           report: "./report_xml.xml"

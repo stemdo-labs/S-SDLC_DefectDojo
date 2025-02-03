@@ -1,6 +1,9 @@
 name: 'Upload Security Report to DefectDojo'
 description: 'Sube reporte de seguridad a DefectDojo y lo asocia a un engagement.'
 inputs:
+  defectdojo_url:
+    description: 'URL de DefectDojo'
+    required: true
   defectdojo_user:
     description: 'Usuario de DefectDojo'
     required: true
@@ -26,12 +29,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Extraer URL de DefectDojo desde Route.yaml
-      shell: bash
-      run: |
-        DEFECTDOJO_URL=$(grep '^\s*host:' "${GITHUB_WORKSPACE}/charts/dojo/route.yml" | sed 's/.*host: //g' | tr -d '[:space:]')
-        echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}"  >> $GITHUB_ENV
-        
     - name: Dar permisos de ejecución a entrypoint.sh
       shell: bash
       run: chmod +x ${{ github.action_path }}/entrypoint.sh
@@ -40,7 +37,7 @@ runs:
       shell: bash
       run: ${{ github.action_path }}/entrypoint.sh
       env:
-        DEFECTDOJO_URL: ${{ env.DEFECTDOJO_URL }}
+        DEFECTDOJO_URL: ${{ inputs.defectdojo_url }}
         DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
         DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
         PRODUCT_ID: ${{ inputs.product_id }}
