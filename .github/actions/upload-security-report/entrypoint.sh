@@ -81,8 +81,8 @@ if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
         -H "accept: application/json" \
         -H "Content-Type: application/json" \
         -d "{
-            \"name\": \"${PRODUCT_NAME}\"
-            \"description\": \"${PRODUCT_NAME}\"
+            \"name\": \"${PRODUCT_NAME}\",
+            \"description\": \"${PRODUCT_NAME}\",
             \"product_type\": \"${PRODUCT_TYPE_ID}\"
         }")
             
