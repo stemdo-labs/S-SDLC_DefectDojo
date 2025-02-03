@@ -3,6 +3,22 @@
 set -e
 
 API_URL="${DEFECTDOJO_URL}/api/v2"
+
+echo " Obteniendo token de DefectDojo..."
+TOKEN_RESPONSE=$(curl -s -X POST "${API_URL}/api-token-auth/" \
+    -H "accept: application/json" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    --data-urlencode "username=${DEFECTDOJO_USER }" \
+    --data-urlencode "password=${DEFECTDOJO_PASSWORD}")
+
+    DEFECTDOJO_TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
+        
+    if [ -z "$DEFECTDOJO_TOKEN" ] || [ "$DEFECTDOJO_TOKEN" == "null" ]; then
+        echo "Error: No se pudo obtener el token de DefectDojo."
+        exit 1
+    fi
+        
+
 HEADERS=(
   -H "Authorization: Token ${DEFECTDOJO_TOKEN}"
   -H "accept: application/json"
@@ -15,11 +31,7 @@ echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN:0:5}*****"
 # Buscar engagement
 echo "Buscando engagement..."
 
-echo "Consultando engagements en: ${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}"
-
 ENCODED_NAME=$(echo -n "$ENGAGEMENT_NAME" | jq -sRr @uri)
-
-echo "Consultando engagements en: ${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENCODED_NAME}"
 
 RESPONSE=$(curl -s -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENCODED_NAME}" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
@@ -66,7 +78,7 @@ fi
 
 # Subir reporte
 echo "Subiendo reporte de seguridad a DefectDojo..."
-UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
+UPLOAD_RESPONSE=$(curl -v -X POST "${API_URL}/import-scan/" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
     -H "accept: application/json" \
     -H "Content-Type: multipart/form-data" \
