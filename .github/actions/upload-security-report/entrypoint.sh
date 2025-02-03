@@ -88,7 +88,7 @@ UPLOAD_RESPONSE=$(curl -v -X POST "${API_URL}/import-scan/" \
     -F "environment=${ENVIRONMENT}" \
     -F "file=@${REPORT}")
 
-if echo "$UPLOAD_RESPONSE" | jq -e '.id' > /dev/null; then
+if echo "$UPLOAD_RESPONSE" | jq -e '.test_id' > /dev/null; then
     echo "Reporte subido correctamente."
 else
     echo "Error al subir el reporte: $UPLOAD_RESPONSE"
