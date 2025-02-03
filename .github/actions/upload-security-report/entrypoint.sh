@@ -19,6 +19,8 @@ ENGAGEMENT_ID=$(curl -s -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
      -H "Content-Type: application/json" \
      "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" | jq -r '.results[0].id')
 
+     
+
 # Si no existe, crear uno
 if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
     echo "Creando nuevo engagement..."
