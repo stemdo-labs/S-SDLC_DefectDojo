@@ -14,10 +14,18 @@ echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN:0:5}*****"
 
 # Buscar engagement
 echo "Buscando engagement..."
-RESPONSE=$(curl -v -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}" \
+
+echo "Consultando engagements en: ${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENGAGEMENT_NAME}"
+
+ENCODED_NAME=$(echo -n "$ENGAGEMENT_NAME" | jq -sRr @uri)
+
+echo "Consultando engagements en: ${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENCODED_NAME}"
+
+RESPONSE=$(curl -s -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENCODED_NAME}" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
     -H "accept: application/json" \
     -H "Content-Type: application/json")
+
 
 ENGAGEMENT_ID=$(echo "$RESPONSE" | jq -r '.results[0].id' 2>/dev/null || echo "null")
 
