@@ -10,8 +10,11 @@ inputs:
   defectdojo_password:
     description: 'Contraseña de DefectDojo'
     required: true
-  product_id:
-    description: 'ID del producto en DefectDojo'
+  product_type_name:
+    description: 'Tipo de producto en DefectDojo'
+    required: true
+  product_name:
+    description: 'Nombre del producto en DefectDojo'
     required: true
   release_name:
     description: 'Nombre del engagement'
@@ -40,7 +43,8 @@ runs:
         DEFECTDOJO_URL: ${{ inputs.defectdojo_url }}
         DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
         DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
-        PRODUCT_ID: ${{ inputs.product_id }}
+        PRODUCT_TYPE_NAME: ${{ inputs.product_type_name }}
+        PRODUCT_NAME: ${{ inputs.product_name }}
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         SCAN_TYPE: ${{ inputs.scan_type }}
         REPORT: ${{ inputs.report }}
