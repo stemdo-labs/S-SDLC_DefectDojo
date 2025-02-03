@@ -26,11 +26,10 @@ HEADERS=(
 )
 
 echo "API_URL=${API_URL}"
-echo "Token recibido (primeros 5 caracteres): ${DEFECTDOJO_TOKEN:0:5}*****"
+
 
 # Buscar engagement
 echo "Buscando engagement..."
-
 ENCODED_NAME=$(echo -n "$ENGAGEMENT_NAME" | jq -sRr @uri)
 
 RESPONSE=$(curl -s -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${ENCODED_NAME}" \
