@@ -25,7 +25,15 @@ HEADERS=(
   -H "Content-Type: application/json"
 )
 
-echo "API_URL=${API_URL}"
+# Buscar producto
+
+echo "Buscando producto..."
+ENCODED_NAME_PRODUCT=$(echo -n "$PRODUCT_NAME" | jq -sRr @uri)
+
+PRODUCT_RESPONSE=$(curl -s -X GET "${API_URL}/products/?name=${ENCODED_NAME_PRODUCT}" \
+    -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
+    -H "accept: application/json" \
+    -H "Content-Type: application/json")
 
 
 # Buscar engagement
