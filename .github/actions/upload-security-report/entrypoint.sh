@@ -78,7 +78,7 @@ fi
 
 # Subir reporte
 echo "Subiendo reporte de seguridad a DefectDojo..."
-UPLOAD_RESPONSE=$(curl -v -X POST "${API_URL}/import-scan/" \
+UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
     -H "accept: application/json" \
     -H "Content-Type: multipart/form-data" \
