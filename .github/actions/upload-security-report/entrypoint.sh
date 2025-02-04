@@ -149,7 +149,7 @@ echo "-H "Content-Type: multipart/form-data" \
     -F "test_type=${SCAN_TYPE}" \
     -F "environment=${ENVIRONMENT}" \
     -F "file=@${REPORT}" \
-    -F "title=${TITLE_SCAN}"
+    -F "test_title=${TITLE_SCAN}"
     
     
 UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
