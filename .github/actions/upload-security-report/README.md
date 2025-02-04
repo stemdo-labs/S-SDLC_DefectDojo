@@ -20,14 +20,18 @@ jobs:
         uses: ./path-to-action
         with:
           defectdojo_url: "https://defectdojo.example.com"
-          defectdojo_user: "your-username"
-          defectdojo_password: "your-password"
           product_type_name: "Web Applications"
           product_name: "MyApp"
           release_name: "Release 1.0"
           scan_type: "ZAP Scan"
           enviroment: "Production"
+          version: "1.0.0"
+          title_scan: "ZAP Security Scan"
           report: "./path/to/security_report.xml"
+        env:
+          defectdojo_user: ${{ secrets.DEFECTDOJO_USER }}
+          defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
+
 ```
 
 ## Entradas (*Inputs*)
@@ -35,15 +39,23 @@ jobs:
 | Nombre                | Descripción                                             | Obligatorio |
 |-----------------------|---------------------------------------------------------|-------------|
 | `defectdojo_url`      | URL de DefectDojo                                      | ✅          |
-| `defectdojo_user`     | Usuario de DefectDojo                                  | ✅          |
-| `defectdojo_password` | Contraseña de DefectDojo                               | ✅          |
 | `product_type_name`   | Tipo de producto en DefectDojo                         | ✅          |
 | `product_name`        | Nombre del producto en DefectDojo                      | ✅          |
-| `test_title`        | Titulo del reporte                               | ❌         |
 | `release_name`        | Nombre del *engagement*                                |  ✅        |
 | `scan_type`           | Tipo de escaneo (Ej. "ZAP Scan", "Nmap Scan", etc.)   | ✅          |
 | `enviroment`          | Entorno donde se realizó el escaneo (Ej. "Development", "Production", etc.)                | ✅          |
+| `version`           | Versión   | ✅          |
+| `title_scan`        | Titulo del reporte (opcional)                              | ❌         |
 | `report`              | Ruta del archivo del reporte a subir                   | ✅          |
+
+
+## Manejo de Credenciales
+
+Los valores de usuario y contraseña de DefecDojo se deben pasar como secretos de GitHub.
+
+- `DEFECTDOJO_USER`: Usuario de DefectDojo.
+- `DEFECTDOJO_PASSWORD`: Contraseña de DefectDojo.
+
 
 ## Requisitos
 
