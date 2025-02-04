@@ -142,15 +142,7 @@ else
 fi
 
 # Subir reporte
-echo "Subiendo reporte de seguridad a DefectDojo..."
-echo "-H "Content-Type: multipart/form-data" \
-    -F "engagement=${ENGAGEMENT_ID}" \
-    -F "scan_type=${SCAN_TYPE}" \
-    -F "test_type=${SCAN_TYPE}" \
-    -F "environment=${ENVIRONMENT}" \
-    -F "file=@${REPORT}" \
-    -F "test_title=${TITLE_SCAN}"
-    
+echo "Subiendo reporte de seguridad a DefectDojo..."  
     
 UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
@@ -160,8 +152,8 @@ UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -F "scan_type=${SCAN_TYPE}" \
     -F "test_type=${SCAN_TYPE}" \
     -F "environment=${ENVIRONMENT}" \
-    -F "file=@${REPORT}" \
-    -F "test_title=${TITLE_SCAN}" )"
+    -F "test_title=${TITLE_SCAN}"
+    -F "file=@${REPORT}")"
 
 
 
