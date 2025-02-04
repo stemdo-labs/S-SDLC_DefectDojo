@@ -148,7 +148,9 @@ echo "-H "Content-Type: multipart/form-data" \
     -F "scan_type=${SCAN_TYPE}" \
     -F "test_type=${SCAN_TYPE}" \
     -F "environment=${ENVIRONMENT}" \
-    -F "file=@${REPORT}")"
+    -F "file=@${REPORT}" \
+    -F "title=${TITLE_SCAN}"
+    
     
 UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
