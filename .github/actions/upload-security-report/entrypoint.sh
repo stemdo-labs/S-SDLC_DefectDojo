@@ -156,7 +156,7 @@ UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -H "Content-Type: multipart/form-data" \
     -F "engagement=${ENGAGEMENT_ID}" \
     -F "scan_type=${SCAN_TYPE}" \
-    -F "test_type=${SCAN_TYPE}" \
+    -F "version=${VERSION}" \
     -F "environment=${ENVIRONMENT}" \
     -F "file=@${REPORT}")
 
