@@ -39,7 +39,8 @@ jobs:
 | `defectdojo_password` | Contraseña de DefectDojo                               | ✅          |
 | `product_type_name`   | Tipo de producto en DefectDojo                         | ✅          |
 | `product_name`        | Nombre del producto en DefectDojo                      | ✅          |
-| `release_name`        | Nombre del *engagement*                                | ✅          |
+| `test_title`        | Titulo del reporte                               | ❌         |
+| `release_name`        | Nombre del *engagement*                                |          |
 | `scan_type`           | Tipo de escaneo (Ej. "ZAP Scan", "Nmap Scan", etc.)   | ✅          |
 | `enviroment`          | Entorno donde se realizó el escaneo (Ej. "Development", "Production", etc.)                | ✅          |
 | `report`              | Ruta del archivo del reporte a subir                   | ✅          |
