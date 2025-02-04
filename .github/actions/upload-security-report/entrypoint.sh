@@ -72,8 +72,9 @@ PRODUCT_RESPONSE=$(curl -s -X GET "${API_URL}/products/?name=${ENCODED_NAME_PROD
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
     -H "accept: application/json" \
     -H "Content-Type: application/json")
+    
+PRODUCT_ID=$(echo "$PRODUCT_RESPONSE" | jq -r '.results[] | select(.name=="'"$PRODUCT_NAME"'") | .id')
 
-PRODUCT_ID=$(echo "$PRODUCT_RESPONSE" | jq -r '.results[0].id' 2>/dev/null || echo "null")
 
 # Si no existe, crear uno
 if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
