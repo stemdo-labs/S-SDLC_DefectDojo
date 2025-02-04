@@ -16,9 +16,6 @@ inputs:
   scan_type:
     description: 'Tipo de escaneo'
     required: true
-  version:
-    description: 'Version'
-    required: true
   enviroment:
     description: 'Entorno'
     required: true
@@ -48,7 +45,6 @@ runs:
         DEFECTDOJO_PASSWORD: ${{ env.defectdojo_password }}
         PRODUCT_TYPE_NAME: ${{ inputs.product_type_name }}
         PRODUCT_NAME: ${{ inputs.product_name }}
-        VERSION: ${{ inputs.version }}
         ENVIRONMENT: ${{ inputs.enviroment }}    
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         VERSION: ${{ inputs.version }}
