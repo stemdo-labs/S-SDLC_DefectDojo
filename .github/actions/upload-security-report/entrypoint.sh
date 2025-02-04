@@ -66,6 +66,7 @@ fi
 echo "Buscando producto..."
 echo "NOMBRE PRODUCTO: "$PRODUCT_NAME""
 ENCODED_NAME_PRODUCT=$(echo -n "$PRODUCT_NAME" | jq -sRr @uri)
+echo "NOMBRE PRODUCTO ENCODED: "$ENCODED_NAME_PRODUCT""
 
 PRODUCT_RESPONSE=$(curl -s -X GET "${API_URL}/products/?name=${ENCODED_NAME_PRODUCT}" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
