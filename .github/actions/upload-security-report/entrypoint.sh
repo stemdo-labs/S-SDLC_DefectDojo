@@ -35,10 +35,10 @@ PRODUCT_TYPE_RESPONSE=$(curl -s -X GET "${API_URL}/product_types/?name=${ENCODED
     -H "accept: application/json" \
     -H "Content-Type: application/json")
 
-PRODUCT_TYPE_ID=$(echo "$PRODUCT_TYPE_RESPONSE" | jq -r '.results[0].id' 2>/dev/null || echo "null")
+PRODUCT_TYPE_ID=$(echo "$PRODUCT_TYPE_RESPONSE" | jq -r '.results[] | select(.name=="'"$PRODUCT_TYPE_NAME"'") | .id')
 
 # Si no existe, crear uno
-if [ "$PRODUCT_TYPE_ID" == "null" ] || [ -z "$PRODUCT_TYPE_ID" ]; then
+if [ "$" == "null" ] || [ -z "$PRODUCT_TYPE_ID" ]; then
     echo "No se encontró el tipo de producto con el nombre: ${PRODUCT_TYPE_NAME}. Creando nuevo tipo de producto..."
     PRODUCT_TYPE_RESPONSE=$(curl -s -X POST "${API_URL}/product_types/" \
         -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
@@ -64,9 +64,8 @@ fi
 
 # Buscar producto
 echo "Buscando producto..."
-echo "NOMBRE PRODUCTO: "$PRODUCT_NAME""
+
 ENCODED_NAME_PRODUCT=$(echo -n "$PRODUCT_NAME" | jq -sRr @uri)
-echo "NOMBRE PRODUCTO ENCODED: "$ENCODED_NAME_PRODUCT""
 
 PRODUCT_RESPONSE=$(curl -s -X GET "${API_URL}/products/?name=${ENCODED_NAME_PRODUCT}" \
     -H "Authorization: Token ${DEFECTDOJO_TOKEN}" \
@@ -113,8 +112,7 @@ RESPONSE=$(curl -s -X GET "${API_URL}/engagements/?product=${PRODUCT_ID}&name=${
     -H "accept: application/json" \
     -H "Content-Type: application/json")
 
-
-ENGAGEMENT_ID=$(echo "$RESPONSE" | jq -r '.results[0].id' 2>/dev/null || echo "null")
+ENGAGEMENT_ID=$(echo "$RESPONSE" | jq -r '.results[] | select(.name=="'"$ENGAGEMENT_NAME"'") | .id')
 
 # Si no existe, crear uno
 if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
