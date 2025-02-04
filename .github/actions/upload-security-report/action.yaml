@@ -22,6 +22,9 @@ inputs:
   scan_type:
     description: 'Tipo de escaneo'
     required: true
+  version:
+    description: 'Version'
+    required: true
   enviroment:
     description: 'Entorno'
     required: true
@@ -47,5 +50,6 @@ runs:
         PRODUCT_NAME: ${{ inputs.product_name }}
         ENVIRONMENT: ${{ inputs.enviroment }}    
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
+        VERSION: ${{ inputs.version }}
         SCAN_TYPE: ${{ inputs.scan_type }}
         REPORT: ${{ inputs.report }}
