@@ -64,6 +64,7 @@ fi
 
 # Buscar producto
 echo "Buscando producto..."
+echo "NOMBRE PRODUCTO: "$PRODUCT_NAME"
 ENCODED_NAME_PRODUCT=$(echo -n "$PRODUCT_NAME" | jq -sRr @uri)
 
 PRODUCT_RESPONSE=$(curl -s -X GET "${API_URL}/products/?name=${ENCODED_NAME_PRODUCT}" \
