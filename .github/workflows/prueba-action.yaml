@@ -21,10 +21,15 @@ jobs:
       - name: Subir reporte a DefectDojo
         uses: ./.github/actions/upload-security-report
         with:
-          defectdojo_user: "admin"
-          defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
-          product_id: "1"
-          release_name: "Prueba Dojo 2"
+          defectdojo_url: "https://dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud/"
+          product_type_name: "Pruba clau"
+          product_name: "Pruba clau"
+          release_name: "Pruba clau"
+          version: "1.0.0"
           scan_type: "ZAP Scan"
           enviroment: "Development"
           report: "./report_xml.xml"
+        env:
+          defectdojo_user: ${{ secrets.DEFECTDOJO_USER }}
+          defectdojo_password: ${{ secrets.DEFECTDOJO_PASSWORD }}
+        
