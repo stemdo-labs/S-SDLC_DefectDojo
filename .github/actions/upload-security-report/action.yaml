@@ -4,12 +4,6 @@ inputs:
   defectdojo_url:
     description: 'URL de DefectDojo'
     required: true
-  defectdojo_user:
-    description: 'Usuario de DefectDojo'
-    required: true
-  defectdojo_password:
-    description: 'Contraseña de DefectDojo'
-    required: true
   product_type_name:
     description: 'Tipo de producto en DefectDojo'
     required: true
@@ -44,8 +38,8 @@ runs:
       run: ${{ github.action_path }}/entrypoint.sh
       env:
         DEFECTDOJO_URL: ${{ inputs.defectdojo_url }}
-        DEFECTDOJO_USER: ${{ inputs.defectdojo_user }}
-        DEFECTDOJO_PASSWORD: ${{ inputs.defectdojo_password }}
+        DEFECTDOJO_USER: ${{ env.defectdojo_user }}
+        DEFECTDOJO_PASSWORD: ${{ env.defectdojo_password }}
         PRODUCT_TYPE_NAME: ${{ inputs.product_type_name }}
         PRODUCT_NAME: ${{ inputs.product_name }}
         ENVIRONMENT: ${{ inputs.enviroment }}    
