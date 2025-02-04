@@ -21,9 +21,12 @@ jobs:
       - name: Subir reporte a DefectDojo
         uses: ./.github/actions/upload-security-report
         with:
-          product_id: "1"
-          release_name: "Prueba Dojo 2"
+          defectdojo_url: "https://dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud/"
+          product_type_name: "Prueba claudia"
+          product_name: "Prueba claudia"
+          release_name: "Prueba Claudia"
           scan_type: "ZAP Scan"
+          version: "1.0.0"
           enviroment: "Development"
           report: "./report_xml.xml"
         env:
