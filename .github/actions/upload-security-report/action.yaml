@@ -28,6 +28,9 @@ inputs:
   report:
     description: 'Reporte a escanear'
     required: true
+  title_scan:
+    description: 'Título del escaner'
+    required: false
 
 runs:
   using: 'composite'
@@ -48,4 +51,5 @@ runs:
         ENVIRONMENT: ${{ inputs.enviroment }}    
         ENGAGEMENT_NAME: ${{ inputs.release_name }}
         SCAN_TYPE: ${{ inputs.scan_type }}
+        TITLE_SCAN: ${{ inputs.title_scan }}
         REPORT: ${{ inputs.report }}
