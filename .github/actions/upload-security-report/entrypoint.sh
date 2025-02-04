@@ -161,7 +161,7 @@ UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
     -F "version=${VERSION}" \
     -F "environment=${ENVIRONMENT}" \
     -F "file=@${REPORT}" \
-    -F "title=${TITLE_SCAN}" )"
+    -F "test_title=${TITLE_SCAN}" )"
 
 
 
