@@ -48,7 +48,7 @@ if [ "$PRODUCT_TYPE_ID" == "null" ] || [ -z "$PRODUCT_TYPE_ID" ]; then
             \"name\": \"${PRODUCT_TYPE_NAME}\"
         }")
             
-    echo "Respuesta de DefectDojo: $PRODUCT_TYPE_RESPONSE"
+ #   echo "Respuesta de DefectDojo: $PRODUCT_TYPE_RESPONSE"
 
     PRODUCT_TYPE_ID=$(echo "$PRODUCT_TYPE_RESPONSE" | jq -r '.id')
             
@@ -56,7 +56,7 @@ if [ "$PRODUCT_TYPE_ID" == "null" ] || [ -z "$PRODUCT_TYPE_ID" ]; then
         echo "Error: No se pudo crear el producto."
         exit 1
     fi
-    echo "Nuevo tipo de producto creado con ID: $PRODUCT_TYPE_ID"
+    echo "Nuevo tipo de producto creado con ID: $PRODUCT_TYPE_ID" 
 else
     echo "Tipo de producto existente encontrado con ID: $PRODUCT_TYPE_ID"
 fi
@@ -71,7 +71,7 @@ PRODUCT_RESPONSE=$(curl -s -X GET "${API_URL}/products/?name=${ENCODED_NAME_PROD
     -H "accept: application/json" \
     -H "Content-Type: application/json")
 
-PRODUCT_ID=$(echo "$PRODUCT_RESPONSE" | jq -r '.results[0].id' 2>/dev/null || echo "null")
+PRODUCT_ID=$(echo "$PRODUCT_RESPONSE" | jq -r '.results[] | select(.name=="'"$ENCODED_NAME_PRODUCT"'") | .id')
 
 # Si no existe, crear uno
 if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
@@ -86,7 +86,7 @@ if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
             \"prod_type\": \"${PRODUCT_TYPE_ID}\"
         }")
             
-    echo "Respuesta de DefectDojo: $PRODUCT_RESPONSE"
+#    echo "Respuesta de DefectDojo: $PRODUCT_RESPONSE"
 
     PRODUCT_ID=$(echo "$PRODUCT_RESPONSE" | jq -r '.id')
             
@@ -128,7 +128,7 @@ if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
                 \"target_end\": \"$(date -d '+1 year' +%Y-%m-%d)\"
             }")
             
-        echo "Respuesta de DefectDojo: $ENGAGEMENT_RESPONSE"
+#        echo "Respuesta de DefectDojo: $ENGAGEMENT_RESPONSE"
 
         ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
             
@@ -158,8 +158,8 @@ UPLOAD_RESPONSE=$(curl -s -X POST "${API_URL}/import-scan/" \
 
 
 if echo "$UPLOAD_RESPONSE" | jq -e '.test_id' > /dev/null; then
-    echo "Reporte subido correctamente."
+    echo "✅ Report successfully uploaded to DefectDojo." >> $GITHUB_STEP_SUMMARY
 else
-    echo "Error al subir el reporte: $UPLOAD_RESPONSE"
+    echo "❌ Error uploading the report to DefectDojo: $UPLOAD_RESPONSE" >> $GITHUB_STEP_SUMMARY
     exit 1
 fi
