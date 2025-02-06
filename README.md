@@ -3,9 +3,9 @@ Aquí podemos encontrar el listado de workflows y la documentación mínima que 
 
 ## Listado de Workflows
 
-- [dojo-openshift.yml](.github/workflows/dojo-openshift.yml) - Trigger: jobs:
-- [creating-readme.yml](.github/workflows/creating-readme.yml) - Trigger: jobs:
-- [prueba-action.yaml](.github/workflows/prueba-action.yaml) - Trigger: jobs:
+- [dojo-openshift.yml](.github/workflows/dojo-openshift.yml)
+- [creating-readme.yml](.github/workflows/creating-readme.yml)
+- [prueba-action.yaml](.github/workflows/prueba-action.yaml)
 
 ## Explicación de uso
 
