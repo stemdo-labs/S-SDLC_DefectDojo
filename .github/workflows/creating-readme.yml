@@ -77,7 +77,7 @@ jobs:
 
       - name: Push changes
         run: |
-          if [[ `git status --porcelain` ]]; then
+          if [[ $(git status --porcelain) ]]; then
             git config --global user.name 'Action automation'
             git config --global user.email 'Github@stemdo.io'
             git pull
