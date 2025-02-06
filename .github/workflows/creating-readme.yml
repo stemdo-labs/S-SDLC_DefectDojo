@@ -36,7 +36,7 @@ jobs:
           # Iterar sobre los archivos de workflow y escribir los enlaces Markdown con su trigger
           for workflow in $workflows; do
             nombre_workflow=$(basename "$workflow")
-            echo "- [$nombre_workflow]($workflow) >> "$archivo_md"
+            echo "- [$nombre_workflow]($workflow)" >> "$archivo_md"
           done
 
           echo "" >> "$archivo_md"
