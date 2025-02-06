@@ -84,6 +84,6 @@ jobs:
             git add .
             git commit -m "📘 Readme updated with workflows"
             git push
-          else
+          else 
             echo "Nothing to push"
           fi
