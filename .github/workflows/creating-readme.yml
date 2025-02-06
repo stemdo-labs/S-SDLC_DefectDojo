@@ -36,7 +36,7 @@ jobs:
           # Iterar sobre los archivos de workflow y escribir los enlaces Markdown con su trigger
           for workflow in $workflows; do
             nombre_workflow=$(basename "$workflow")
-            trigger=$(grep -E 'on:\s*(workflow_dispatch|workflow_call|push|pull_request|schedule|release|issue_comment|repository_dispatch|workflow_run):' "$workflow" | head -n 1 | sed -E 's/on:\s*//')
+            trigger=$(grep -E '^\s*on:\s*(workflow_dispatch|workflow_call|push|pull_request|schedule|release|issue_comment|repository_dispatch|workflow_run)' "$workflow" | head -n 1 | sed -E 's/^\s*on:\s*//')
             echo "- [$nombre_workflow]($workflow) - Trigger: ${trigger:-Desconocido}" >> "$archivo_md"
           done
 
