@@ -1,0 +1,88 @@
+name: Creating README.md
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  creating_readme:
+    name: Creating readme
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Finding workflows
+        run: |
+          # Obtener la lista de archivos de workflow en .github/workflows
+          workflows=$(find .github/workflows -type f -name "*.yml" -o -name "*.yaml")
+
+          # Nombre del archivo Markdown
+          archivo_md="README.md"
+
+          # Comprobar si ya existe el archivo Markdown y borrarlo si es así
+          if [ -e "$archivo_md" ]; then
+            rm "$archivo_md"
+          fi
+
+          echo "# Workflows de GitHub Actions" > "$archivo_md"
+          echo "Aquí podemos encontrar el listado de workflows y la documentación mínima que deben tener." >> "$archivo_md"
+          echo "" >> "$archivo_md"
+          echo "## Listado de Workflows" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+
+          # Iterar sobre los archivos de workflow y escribir los enlaces Markdown
+          for workflow in $workflows; do
+            nombre_workflow=$(basename "$workflow")
+            echo "- [$nombre_workflow]($workflow)" >> "$archivo_md"
+          done
+
+          echo "" >> "$archivo_md"
+          echo "## Explicación de uso" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+
+          echo "1. Dirígete a la pestaña __Actions__, para ejecutar los workflows disponibles." >> "$archivo_md"
+          echo "2. Selecciona el workflow que deseas ejecutar." >> "$archivo_md"
+          echo "3. Configura los parámetros necesarios y ejecuta el workflow." >> "$archivo_md"
+          echo "4. Monitorea la ejecución y revisa los logs en la pestaña de Actions." >> "$archivo_md"
+
+          echo "" >> "$archivo_md"
+          echo "## Documentación mínima para workflows" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+
+          echo "\`\`\`yaml" >> "$archivo_md"
+          echo "# Nombre del Workflow" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+          echo "Pequeña descripción de lo que hace" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+          echo "## Ejemplo de uso" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+          echo "on:" >> "$archivo_md"
+          echo "  push:" >> "$archivo_md"
+          echo "    branches:" >> "$archivo_md"
+          echo "      - main" >> "$archivo_md"
+          echo "" >> "$archivo_md"
+          echo "jobs:" >> "$archivo_md"
+          echo "  example_job:" >> "$archivo_md"
+          echo "    runs-on: ubuntu-latest" >> "$archivo_md"
+          echo "    steps:" >> "$archivo_md"
+          echo "      - name: Example step" >> "$archivo_md"
+          echo "        run: echo 'Hello, world!'" >> "$archivo_md"
+          echo "\`\`\`" >> "$archivo_md"
+
+          echo "Se ha creado el archivo $archivo_md con los enlaces a los workflows."
+
+      - name: Push changes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.name 'Action automation'
+            git config --global user.email 'Github@stemdo.io'
+            git pull
+            sleep 5
+            git add .
+            git commit -m "📘 Readme updated with workflows"
+            git push
+          else
+            echo "Nothing to push"
