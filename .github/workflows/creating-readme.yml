@@ -33,7 +33,7 @@ jobs:
           echo "## Listado de Workflows" >> "$archivo_md"
           echo "" >> "$archivo_md"
 
-          # Iterar sobre los archivos de workflow y escribir los enlaces Markdown con su trigger
+          # Iterar sobre los archivos de workflow y escribir los enlaces Markdown 
           for workflow in $workflows; do
             nombre_workflow=$(basename "$workflow")
             echo "- [$nombre_workflow]($workflow)" >> "$archivo_md"
@@ -72,17 +72,17 @@ jobs:
           echo "        run: echo 'Hello, world!'" >> "$archivo_md"
           echo "\`\`\`" >> "$archivo_md"
 
-          echo "Se ha creado el archivo $archivo_md con los enlaces a los workflows y sus triggers."
+          echo "Se ha creado el archivo $archivo_md con los enlaces a los workflows"
 
       - name: Push changes
         run: |
           if [[ `git status --porcelain` ]]; then
-            git config --global user.name 'Action automation'
+            git config --global user.name 'Workflows automation'
             git config --global user.email 'Github@stemdo.io'
             git pull
             sleep 5
             git add .
-            git commit -m "📘 Readme updated with workflows and triggers"
+            git commit -m "📘 Readme updated with workflows"
             git push
           else
             echo "Nothing to push"
