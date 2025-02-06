@@ -33,10 +33,11 @@ jobs:
           echo "## Listado de Workflows" >> "$archivo_md"
           echo "" >> "$archivo_md"
 
-          # Iterar sobre los archivos de workflow y escribir los enlaces Markdown
+          # Iterar sobre los archivos de workflow y escribir los enlaces Markdown con su trigger
           for workflow in $workflows; do
             nombre_workflow=$(basename "$workflow")
-            echo "- [$nombre_workflow]($workflow)" >> "$archivo_md"
+            trigger=$(grep -E 'on:\s*(workflow_dispatch|workflow_call|push|pull_request|schedule|release|issue_comment|repository_dispatch|workflow_run)' "$workflow" | head -n 1 | sed -E 's/on:\s*//')
+            echo "- [$nombre_workflow]($workflow) - Trigger: ${trigger:-Desconocido}" >> "$archivo_md"
           done
 
           echo "" >> "$archivo_md"
@@ -72,7 +73,7 @@ jobs:
           echo "        run: echo 'Hello, world!'" >> "$archivo_md"
           echo "\`\`\`" >> "$archivo_md"
 
-          echo "Se ha creado el archivo $archivo_md con los enlaces a los workflows."
+          echo "Se ha creado el archivo $archivo_md con los enlaces a los workflows y sus triggers."
 
       - name: Push changes
         run: |
@@ -82,7 +83,7 @@ jobs:
             git pull
             sleep 5
             git add .
-            git commit -m "📘 Readme updated with workflows"
+            git commit -m "📘 Readme updated with workflows and triggers"
             git push
           else
             echo "Nothing to push"
