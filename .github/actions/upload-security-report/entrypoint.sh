@@ -15,7 +15,7 @@ TOKEN_RESPONSE=$(curl -s -X POST "${API_URL}/api-token-auth/" \
     DEFECTDOJO_TOKEN=$(echo "$TOKEN_RESPONSE" | jq -r '.token')
         
     if [ -z "$DEFECTDOJO_TOKEN" ] || [ "$DEFECTDOJO_TOKEN" == "null" ]; then
-        echo "Error: No se pudo obtener el token de DefectDojo." >> $GITHUB_STEP_SUMMARY
+        echo "❌ Error: Failed to retrieve the DefectDojo token." >> $GITHUB_STEP_SUMMARY
         exit 1
     fi
         
@@ -53,7 +53,7 @@ if [ "$" == "null" ] || [ -z "$PRODUCT_TYPE_ID" ]; then
     PRODUCT_TYPE_ID=$(echo "$PRODUCT_TYPE_RESPONSE" | jq -r '.id')
             
     if [ "$PRODUCT_TYPE_ID" == "null" ] || [ -z "$PRODUCT_TYPE_ID" ]; then
-        echo "Error: No se pudo crear el producto." >> $GITHUB_STEP_SUMMARY
+        echo "❌ Error: Failed to create the product type." >> $GITHUB_STEP_SUMMARY
         exit 1
     fi
     echo "Nuevo tipo de producto creado con ID: $PRODUCT_TYPE_ID" 
@@ -92,7 +92,7 @@ if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
     PRODUCT_ID=$(echo "$PRODUCT_RESPONSE" | jq -r '.id')
             
     if [ "$PRODUCT_ID" == "null" ] || [ -z "$PRODUCT_ID" ]; then
-        echo "Error: No se pudo crear el producto." >> $GITHUB_STEP_SUMMARY
+        echo "❌ Error: Failed to create the product." >> $GITHUB_STEP_SUMMARY
         exit 1
     fi
     echo "Nuevo producto creado con ID: $PRODUCT_ID"
@@ -133,7 +133,7 @@ if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
         ENGAGEMENT_ID=$(echo "$ENGAGEMENT_RESPONSE" | jq -r '.id')
             
         if [ "$ENGAGEMENT_ID" == "null" ] || [ -z "$ENGAGEMENT_ID" ]; then
-            echo "Error: No se pudo crear el engagement." >> $GITHUB_STEP_SUMMARY
+            echo "❌ Error: Failed to create the engagement." >> $GITHUB_STEP_SUMMARY
             exit 1
         fi
     echo "Nuevo engagement creado con ID: $ENGAGEMENT_ID"
