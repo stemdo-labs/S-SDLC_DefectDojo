@@ -3,7 +3,7 @@ kind: Route
 metadata:
   name: dojo
   annotations:
-    haproxy.router.openshift.io/timeout: "1200s"
+    haproxy.router.openshift.io/timeout: "600s"
 spec:
   host: dojo.ez-ibm-openshift-vpc-b9be9ed6ae33d743815245d0b773ebc7-0000.eu-es.containers.appdomain.cloud
   to:
